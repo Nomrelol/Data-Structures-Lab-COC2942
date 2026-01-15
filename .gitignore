@@ -1,0 +1,6 @@
+*.exe
+*.obj
+*.in
+*.out
+*.txt
+.idea/
