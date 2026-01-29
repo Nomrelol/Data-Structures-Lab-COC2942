@@ -1,64 +1,77 @@
 #ifndef COC2942_STACK_H
 #define COC2942_STACK_H
+
 #include <iostream>
 #include "Linked_List.h"
+
+template <typename T>
 class Stack {
-    ListNode<int>* top;
-    int size = 0;
+    ListNode<T>* top;
+    int size;
+
 public:
-    Stack() {
-        top = NULL;
-    }
+    Stack() : top(nullptr), size(0) {}
+
     ~Stack() {
-        while (top != NULL) {
-            const ListNode<int>* temp = top;
+        while (top != nullptr) {
+            ListNode<T>* temp = top;
             top = top->next;
             delete temp;
         }
     }
 
-    void push(const int value) {
-        auto newNode = new ListNode<int>();
+    void push(const T& value) {
+        auto* newNode = new ListNode<T>();
         newNode->val = value;
         newNode->next = top;
         top = newNode;
-        size++;
-        std::cout << value << " pushed to the stack \n";
+        ++size;
+
+        std::cout << value << " pushed to the stack\n";
     }
-    int pop() {
-        if (top == NULL) {
-            std::cout << "Stack Underflow" << '\n';
-            return INF;
+
+    T pop() {
+        if (top == nullptr) {
+            std::cout << "Stack Underflow\n";
+            return T{};
         }
-        const ListNode<int> *temp = top;
-        const int value = top->val;
-        std::cout << value << " popped from the stack \n";
+
+        ListNode<T>* temp = top;
+        T value = top->val;
+
         top = top->next;
         delete temp;
-        size--;
+        --size;
+
+        std::cout << value << " popped from the stack\n";
         return value;
     }
-    int Size() const{
+
+    int Size() const {
         return size;
     }
-    int Top() const{
-        if (top == NULL) {
-            std::cout << "\nStack is empty\n";
-            return INF;
+
+    T Top() const {
+        if (top == nullptr) {
+            std::cout << "Stack is empty\n";
+            return T{};
         }
         return top->val;
     }
+
     bool isEmpty() const {
-        return top == NULL;
+        return top == nullptr;
     }
+
     void printStack() const {
-        if (top == NULL) {
-            std::cout << "\nStack is empty \n";
+        if (top == nullptr) {
+            std::cout << "Stack is empty\n";
             return;
         }
-        const ListNode<int> *temp = top;
-        std::cout << "Stack Elements \n";
-        while (temp != NULL) {
+
+        std::cout << "Stack Elements:\n";
+        ListNode<T>* temp = top;
+        while (temp != nullptr) {
             std::cout << temp->val << " ";
             temp = temp->next;
         }
@@ -66,5 +79,4 @@ public:
     }
 };
 
-
-#endif //COC2942_STACK_H
+#endif // COC2942_STACK_H
