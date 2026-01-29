@@ -1,13 +1,20 @@
 #ifndef COC2942_BT_H
 #define COC2942_BT_H
 
+template<typename T>
 class Tree {
-public :
-    int val;
+public:
+    T val;
     Tree* left;
     Tree* right;
-    Tree(): val(0), left(nullptr), right(nullptr) {}
-    Tree(const int x) : val(x), left(nullptr), right(nullptr) {}
+
+    Tree() : val(T{}), left(nullptr), right(nullptr) {}
+    Tree(const T& x) : val(x), left(nullptr), right(nullptr) {}
+    Tree(const T& x, Tree* l, Tree* r) : val(x), left(l), right(r) {}
+
+    bool isLeaf() const {
+        return left == nullptr && right == nullptr;
+    }
 };
 
-#endif //COC2942_BT_H
+#endif // COC2942_BT_H
