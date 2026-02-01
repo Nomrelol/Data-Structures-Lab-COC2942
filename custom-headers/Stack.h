@@ -2,8 +2,8 @@
 #define COC2942_STACK_H
 
 #include <iostream>
+#include<stdexcept>
 #include "Linked_List.h"
-
 template <typename T>
 class Stack {
     ListNode<T>* top;
@@ -21,29 +21,21 @@ public:
     }
 
     void push(const T& value) {
-        auto* newNode = new ListNode<T>();
-        newNode->val = value;
+        auto* newNode = new ListNode<T>(value);
         newNode->next = top;
         top = newNode;
         ++size;
-
-        std::cout << value << " pushed to the stack\n";
     }
 
     T pop() {
-        if (top == nullptr) {
-            std::cout << "Stack Underflow\n";
-            return T{};
-        }
+        if (!top)
+            throw std::underflow_error("Stack Underflow");
 
         ListNode<T>* temp = top;
-        T value = top->val;
-
+        T value = temp->val;
         top = top->next;
         delete temp;
         --size;
-
-        std::cout << value << " popped from the stack\n";
         return value;
     }
 
@@ -52,10 +44,8 @@ public:
     }
 
     T Top() const {
-        if (top == nullptr) {
-            std::cout << "Stack is empty\n";
-            return T{};
-        }
+        if (!top)
+            throw std::underflow_error("Stack Empty");
         return top->val;
     }
 
